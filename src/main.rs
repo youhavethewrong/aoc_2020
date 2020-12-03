@@ -12,7 +12,7 @@ fn main() -> Result<(), Error> {
     let passwords = convert_file_contents_to_passwords(&input)?;
     let result: Vec<bool> = passwords
         .iter()
-        .map(|p| p.is_valid())
+        .map(|p| p.is_valid_for_toboggan_company())
         .filter(|p| *p == true)
         .collect();
     println!("{} of {}", result.len(), passwords.len());

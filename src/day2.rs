@@ -9,10 +9,17 @@ pub struct Password {
 }
 
 impl Password {
-    pub fn is_valid(&self) -> bool {
+    pub fn is_valid_for_sled_company(&self) -> bool {
         self.freq_analysis.contains_key(&self.required_str)
             && self.freq_analysis.get(&self.required_str).unwrap() >= &self.min
             && self.freq_analysis.get(&self.required_str).unwrap() <= &self.max
+    }
+
+    pub fn is_valid_for_toboggan_company(&self) -> bool {
+        let first_position = &self.content[self.min - 1..self.min];
+        let second_position = &self.content[self.max - 1..self.max];
+        first_position == &self.required_str && second_position != &self.required_str
+            || first_position != &self.required_str && second_position == &self.required_str
     }
 }
 
@@ -61,7 +68,7 @@ mod tests {
     }
 
     #[test]
-    fn should_validate_passwords() {
+    fn should_validate_passwords_for_sled_company() {
         let mut freq_analysis_1: HashMap<String, usize> = HashMap::new();
         freq_analysis_1.entry("c".to_string()).or_insert(9);
         let password_1 = Password {
@@ -71,7 +78,7 @@ mod tests {
             content: "ccccccccc".to_string(),
             freq_analysis: freq_analysis_1,
         };
-        assert_eq!(true, password_1.is_valid());
+        assert_eq!(true, password_1.is_valid_for_sled_company());
 
         let mut freq_analysis_2: HashMap<String, usize> = HashMap::new();
         freq_analysis_2.entry("a".to_string()).or_insert(1);
@@ -86,7 +93,7 @@ mod tests {
             content: "abcde".to_string(),
             freq_analysis: freq_analysis_2,
         };
-        assert_eq!(true, password_2.is_valid());
+        assert_eq!(true, password_2.is_valid_for_sled_company());
 
         let mut freq_analysis_3: HashMap<String, usize> = HashMap::new();
         freq_analysis_3.entry("c".to_string()).or_insert(1);
@@ -101,6 +108,39 @@ mod tests {
             content: "cdefg".to_string(),
             freq_analysis: freq_analysis_3,
         };
-        assert_eq!(false, password_3.is_valid());
+        assert_eq!(false, password_3.is_valid_for_sled_company());
+    }
+
+    #[test]
+    fn should_validate_passwords_for_toboggan_company() {
+        let freq_analysis_1: HashMap<String, usize> = HashMap::new();
+        let password_1 = Password {
+            min: 2,
+            max: 9,
+            required_str: "c".to_string(),
+            content: "ccccccccc".to_string(),
+            freq_analysis: freq_analysis_1,
+        };
+        assert_eq!(false, password_1.is_valid_for_toboggan_company());
+
+        let freq_analysis_2: HashMap<String, usize> = HashMap::new();
+        let password_2 = Password {
+            min: 1,
+            max: 3,
+            required_str: "a".to_string(),
+            content: "abcde".to_string(),
+            freq_analysis: freq_analysis_2,
+        };
+        assert_eq!(true, password_2.is_valid_for_toboggan_company());
+
+        let freq_analysis_3: HashMap<String, usize> = HashMap::new();
+        let password_3 = Password {
+            min: 1,
+            max: 3,
+            required_str: "b".to_string(),
+            content: "cdefg".to_string(),
+            freq_analysis: freq_analysis_3,
+        };
+        assert_eq!(false, password_3.is_valid_for_toboggan_company());
     }
 }
