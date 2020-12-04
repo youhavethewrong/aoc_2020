@@ -12,8 +12,14 @@ fn main() -> Result<(), Error> {
     let input = std::env::args().nth(1).expect("\nprovide a filename\n");
     let map = convert_file_to_string(&input)?;
     let (trees, width, height) = place_trees(&map);
-    let count = trees_encountered(trees, width, height, 3, 1);
-    println!("Encountered {} trees.", count);
+    let slopes = vec![(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)];
+    let mut tree_count: u64 = 1;
+    for slope in slopes {
+        let count = trees_encountered(&trees, width, height, slope.0, slope.1);
+        println!("Encountered {} trees.", count);
+        tree_count *= count as u64;
+    }
+    println!("{} total", tree_count);
     Ok(())
 }
 

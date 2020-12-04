@@ -18,7 +18,7 @@ pub fn place_trees(input: &str) -> (BitVec<u32>, u32, u32) {
 }
 
 pub fn trees_encountered(
-    trees: BitVec<u32>,
+    trees: &BitVec<u32>,
     width: u32,
     height: u32,
     right: u32,
@@ -84,7 +84,7 @@ mod tests {
 ";
         let expected = 7;
         let (trees, width, height) = place_trees(base_map);
-        let actual = trees_encountered(trees, width, height, 3, 1);
+        let actual = trees_encountered(&trees, width, height, 3, 1);
         assert_eq!(expected, actual);
     }
 }
