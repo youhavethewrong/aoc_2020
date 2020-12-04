@@ -8,7 +8,7 @@ use std::result::Result;
 use aoc_2020::day2::{parse_password_string, Password};
 
 fn main() -> Result<(), Error> {
-    let input = "input/day2_a.txt";
+    let input = std::env::args().nth(1).expect("\nprovide a filename\n");
     let passwords = convert_file_contents_to_passwords(&input)?;
     let result: Vec<bool> = passwords
         .iter()
