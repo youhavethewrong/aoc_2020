@@ -13,7 +13,7 @@ fn main() -> Result<(), Error> {
     let result: Vec<bool> = passwords
         .iter()
         .map(|p| p.is_valid_for_toboggan_company())
-        .filter(|p| *p == true)
+        .filter(|p| *p)
         .collect();
     println!("{} of {}", result.len(), passwords.len());
     Ok(())
