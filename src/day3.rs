@@ -2,7 +2,7 @@ use bit_vec::BitVec;
 
 pub fn place_trees(input: &str) -> (BitVec<u32>, u32, u32) {
     let input = input.trim();
-    let lines: Vec<&str> = input.split("\n").collect();
+    let lines: Vec<&str> = input.split('\n').collect();
     let height = lines.len() as u32;
     let width = lines[0].len() as u32;
     let input = input.replace("\n", "");

@@ -24,10 +24,10 @@ fn convert_file_to_string(input: &str) -> Result<String, Error> {
 #[allow(dead_code)]
 fn convert_file_contents_to_numbers(input: &str) -> Result<Vec<u32>, Error> {
     let contents = convert_file_to_string(input)?;
-    let lines = contents.split("\n");
+    let lines = contents.split('\n');
     let mut numbers: Vec<u32> = vec![];
     for line in lines {
-        if line.len() > 0 {
+        if !line.is_empty() {
             let number: u32 = line.parse().unwrap();
             numbers.push(number);
         }
@@ -38,10 +38,10 @@ fn convert_file_contents_to_numbers(input: &str) -> Result<Vec<u32>, Error> {
 #[allow(dead_code)]
 fn convert_file_contents_to_passwords(input: &str) -> Result<Vec<Password>, Error> {
     let contents = convert_file_to_string(input)?;
-    let lines = contents.split("\n");
+    let lines = contents.split('\n');
     let mut passwords: Vec<Password> = vec![];
     for line in lines {
-        if line.len() > 0 {
+        if !line.is_empty() {
             let password: Password = parse_password_string(line);
             passwords.push(password);
         }

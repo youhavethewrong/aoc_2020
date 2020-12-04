@@ -24,9 +24,9 @@ impl Password {
 }
 
 pub fn parse_password_string(input: &str) -> Password {
-    let parts: Vec<&str> = input.split(" ").collect();
-    let count: Vec<&str> = parts[0].split("-").collect();
-    let required_str: Vec<&str> = parts[1].split(":").collect();
+    let parts: Vec<&str> = input.split(' ').collect();
+    let count: Vec<&str> = parts[0].split('-').collect();
+    let required_str: Vec<&str> = parts[1].split(':').collect();
     let content = parts[2];
     let min: usize = count[0].parse().unwrap();
     let max: usize = count[1].parse().unwrap();
@@ -36,11 +36,11 @@ pub fn parse_password_string(input: &str) -> Password {
         *count += 1;
     }
     Password {
-        min: min,
-        max: max,
+        min,
+        max,
         required_str: required_str[0].to_string(),
         content: content.to_string(),
-        freq_analysis: freq_analysis,
+        freq_analysis,
     }
 }
 
