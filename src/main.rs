@@ -5,6 +5,7 @@ use std::io::prelude::*;
 use std::io::{BufReader, Error};
 use std::result::Result;
 
+use aoc_2020::day1::find_three;
 use aoc_2020::day2::{parse_password_string, Password};
 use aoc_2020::day3::{place_trees, trees_encountered};
 
@@ -47,6 +48,26 @@ fn convert_file_contents_to_passwords(input: &str) -> Result<Vec<Password>, Erro
         }
     }
     Ok(passwords)
+}
+
+#[allow(dead_code)]
+fn day1_part_b(input: &str) -> Result<(), Error> {
+    let numbers = convert_file_contents_to_numbers(&input)?;
+    let result = find_three(numbers, 2020);
+    println!("{}", result);
+    Ok(())
+}
+
+#[allow(dead_code)]
+fn day2_part_b(input: &str) -> Result<(), Error> {
+    let passwords = convert_file_contents_to_passwords(&input)?;
+    let result: Vec<bool> = passwords
+        .iter()
+        .map(|p| p.is_valid_for_toboggan_company())
+        .filter(|p| *p)
+        .collect();
+    println!("{} of {}", result.len(), passwords.len());
+    Ok(())
 }
 
 fn day3_part_b(input: &str) -> Result<(), Error> {
