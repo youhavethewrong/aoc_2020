@@ -18,8 +18,8 @@ impl Password {
     pub fn is_valid_for_toboggan_company(&self) -> bool {
         let first_position = &self.content[self.min - 1..self.min];
         let second_position = &self.content[self.max - 1..self.max];
-        first_position == &self.required_str && second_position != &self.required_str
-            || first_position != &self.required_str && second_position == &self.required_str
+        first_position == self.required_str && second_position != self.required_str
+            || first_position != self.required_str && second_position == self.required_str
     }
 }
 
