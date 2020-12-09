@@ -8,10 +8,11 @@ use std::result::Result;
 use aoc_2020::day1::find_three;
 use aoc_2020::day2::{parse_password_string, Password};
 use aoc_2020::day3::{place_trees, trees_encountered};
+use aoc_2020::day4::convert_batch_file_to_passports;
 
 fn main() -> Result<(), Error> {
     let input = std::env::args().nth(1).expect("\nprovide a filename\n");
-    day3_part_b(&input)
+    day4_part_a(&input)
 }
 
 fn convert_file_to_string(input: &str) -> Result<String, Error> {
@@ -70,6 +71,7 @@ fn day2_part_b(input: &str) -> Result<(), Error> {
     Ok(())
 }
 
+#[allow(dead_code)]
 fn day3_part_b(input: &str) -> Result<(), Error> {
     let map = convert_file_to_string(&input)?;
     let (trees, width, height) = place_trees(&map);
@@ -81,5 +83,12 @@ fn day3_part_b(input: &str) -> Result<(), Error> {
         tree_count *= count as u64;
     }
     println!("{} total", tree_count);
+    Ok(())
+}
+
+fn day4_part_a(input: &str) -> Result<(), Error> {
+    let string = convert_file_to_string(&input)?;
+    let passports = convert_batch_file_to_passports(&string);
+    println!("{}", passports.len());
     Ok(())
 }
