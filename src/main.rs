@@ -8,7 +8,7 @@ use std::result::Result;
 use aoc_2020::day1::find_three;
 use aoc_2020::day2::{parse_password_string, Password};
 use aoc_2020::day3::{place_trees, trees_encountered};
-use aoc_2020::day4::convert_batch_file_to_passports;
+use aoc_2020::day4::{convert_batch_file_to_passports, Passport};
 
 fn main() -> Result<(), Error> {
     let input = std::env::args().nth(1).expect("\nprovide a filename\n");
@@ -89,6 +89,15 @@ fn day3_part_b(input: &str) -> Result<(), Error> {
 fn day4_part_a(input: &str) -> Result<(), Error> {
     let string = convert_file_to_string(&input)?;
     let passports = convert_batch_file_to_passports(&string);
-    println!("{}", passports.len());
+    let valid_passports: Vec<bool> = passports
+        .iter()
+        .map(|p| p.is_valid())
+        .filter(|p| *p)
+        .collect();
+    println!(
+        "Of the {} passports {} are valid.",
+        passports.len(),
+        valid_passports.len()
+    );
     Ok(())
 }

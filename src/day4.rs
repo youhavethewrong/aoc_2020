@@ -11,7 +11,7 @@ pub struct Passport {
 }
 
 impl Passport {
-    fn new() -> Passport {
+    pub fn new() -> Passport {
         Passport {
             birth_year: None,
             issue_year: None,
@@ -23,8 +23,14 @@ impl Passport {
             country_id: None,
         }
     }
-    fn is_valid(&self) -> bool {
-        false
+    pub fn is_valid(&self) -> bool {
+        self.birth_year.is_some()
+            && self.issue_year.is_some()
+            && self.expiration_year.is_some()
+            && self.height.is_some()
+            && self.hair_color.is_some()
+            && self.eye_color.is_some()
+            && self.passport_id.is_some()
     }
 }
 
