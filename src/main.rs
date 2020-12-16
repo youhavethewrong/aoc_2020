@@ -8,11 +8,11 @@ use std::result::Result;
 use aoc_2020::day1::find_three;
 use aoc_2020::day2::{parse_password_string, Password};
 use aoc_2020::day3::{place_trees, trees_encountered};
-use aoc_2020::day4::{convert_batch_file_to_passports, Passport};
+use aoc_2020::day4::convert_batch_file_to_passports;
 
 fn main() -> Result<(), Error> {
     let input = std::env::args().nth(1).expect("\nprovide a filename\n");
-    day4_part_a(&input)
+    day4_part_b(&input)
 }
 
 fn convert_file_to_string(input: &str) -> Result<String, Error> {
@@ -86,12 +86,29 @@ fn day3_part_b(input: &str) -> Result<(), Error> {
     Ok(())
 }
 
+#[allow(dead_code)]
 fn day4_part_a(input: &str) -> Result<(), Error> {
     let string = convert_file_to_string(&input)?;
     let passports = convert_batch_file_to_passports(&string);
     let valid_passports: Vec<bool> = passports
         .iter()
-        .map(|p| p.is_valid())
+        .map(|p| p.is_valid_basic())
+        .filter(|p| *p)
+        .collect();
+    println!(
+        "Of the {} passports {} are valid.",
+        passports.len(),
+        valid_passports.len()
+    );
+    Ok(())
+}
+
+fn day4_part_b(input: &str) -> Result<(), Error> {
+    let string = convert_file_to_string(&input)?;
+    let passports = convert_batch_file_to_passports(&string);
+    let valid_passports: Vec<bool> = passports
+        .iter()
+        .map(|p| p.is_valid_extended())
         .filter(|p| *p)
         .collect();
     println!(
