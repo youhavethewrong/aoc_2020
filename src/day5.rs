@@ -15,6 +15,17 @@ pub fn find_seat_id(locator: &str) -> u32 {
     8 * row + col
 }
 
+pub fn find_my_seat(seat_ids: Vec<u32>) -> u32 {
+    let mut prior_seat = 0;
+    for seat in seat_ids {
+        if seat - prior_seat > 1 && prior_seat != 0 {
+            return seat - 1;
+        }
+        prior_seat = seat;
+    }
+    0
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
