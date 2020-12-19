@@ -9,10 +9,11 @@ use aoc_2020::day1::find_three;
 use aoc_2020::day2::{parse_password_string, Password};
 use aoc_2020::day3::{place_trees, trees_encountered};
 use aoc_2020::day4::convert_batch_file_to_passports;
+use aoc_2020::day5::find_seat_id;
 
 fn main() -> Result<(), Error> {
     let input = std::env::args().nth(1).expect("\nprovide a filename\n");
-    day4_part_b(&input)
+    day5_part_a(&input)
 }
 
 fn convert_file_to_string(input: &str) -> Result<String, Error> {
@@ -103,6 +104,7 @@ fn day4_part_a(input: &str) -> Result<(), Error> {
     Ok(())
 }
 
+#[allow(dead_code)]
 fn day4_part_b(input: &str) -> Result<(), Error> {
     let string = convert_file_to_string(&input)?;
     let passports = convert_batch_file_to_passports(&string);
@@ -116,5 +118,17 @@ fn day4_part_b(input: &str) -> Result<(), Error> {
         passports.len(),
         valid_passports.len()
     );
+    Ok(())
+}
+
+fn day5_part_a(input: &str) -> Result<(), Error> {
+    let string = convert_file_to_string(&input)?;
+    let lines = string.split('\n');
+
+    let mut seat_ids: Vec<u32> = lines
+        .map(|l| if !l.is_empty() { find_seat_id(l) } else { 0 })
+        .collect();
+    seat_ids.sort();
+    println!("The highest seat id is {}", seat_ids[seat_ids.len() - 1]);
     Ok(())
 }

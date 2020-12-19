@@ -1,7 +1,18 @@
 pub fn find_seat_id(locator: &str) -> u32 {
-    // take the first 7 characters to find the row
-    // use the rest to find the column
-    0
+    let row_locator = &locator[..7];
+    let row_string: String = row_locator
+        .chars()
+        .map(|c| if c == 'F' { "1" } else { "0" })
+        .collect();
+    let row = 127 - u32::from_str_radix(&row_string, 2).unwrap();
+
+    let col_locator = &locator[7..10];
+    let col_string: String = col_locator
+        .chars()
+        .map(|c| if c == 'R' { "1" } else { "0" })
+        .collect();
+    let col = u32::from_str_radix(&col_string, 2).unwrap();
+    8 * row + col
 }
 
 #[cfg(test)]
