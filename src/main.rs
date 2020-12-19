@@ -128,7 +128,7 @@ fn day5_part_a(input: &str) -> Result<(), Error> {
     let mut seat_ids: Vec<u32> = lines
         .map(|l| if !l.is_empty() { find_seat_id(l) } else { 0 })
         .collect();
-    seat_ids.sort();
+    seat_ids.sort_unstable();
     println!("The highest seat id is {}", seat_ids[seat_ids.len() - 1]);
     Ok(())
 }
