@@ -10,10 +10,11 @@ use aoc_2020::day2::{parse_password_string, Password};
 use aoc_2020::day3::{place_trees, trees_encountered};
 use aoc_2020::day4::convert_batch_file_to_passports;
 use aoc_2020::day5::{find_my_seat, find_seat_id};
+use aoc_2020::day6::{parse_groups, sum_group_counts};
 
 fn main() -> Result<(), Error> {
     let input = std::env::args().nth(1).expect("\nprovide a filename\n");
-    day5_part_b(&input)
+    day6_part_a(&input)
 }
 
 fn convert_file_to_string(input: &str) -> Result<String, Error> {
@@ -134,6 +135,7 @@ fn day5_part_a(input: &str) -> Result<(), Error> {
     Ok(())
 }
 
+#[allow(dead_code)]
 fn day5_part_b(input: &str) -> Result<(), Error> {
     let string = convert_file_to_string(&input)?;
     let lines = string.split('\n');
@@ -144,5 +146,13 @@ fn day5_part_b(input: &str) -> Result<(), Error> {
     seat_ids.sort_unstable();
     let my_seat = find_my_seat(seat_ids);
     println!("My seat is {}", my_seat);
+    Ok(())
+}
+
+fn day6_part_a(input: &str) -> Result<(), Error> {
+    let string = convert_file_to_string(&input)?;
+    let groups = parse_groups(&string);
+    let sum = sum_group_counts(&groups);
+    println!("The sum of all group flags is {}", sum);
     Ok(())
 }
